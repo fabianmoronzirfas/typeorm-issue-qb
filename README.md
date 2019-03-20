@@ -54,7 +54,7 @@ See [src/BathingspotRepository.ts](src/BathingspotRepository.ts) for the real th
 
 ## Solution  
 
-The solution is to use quotation marks around the names. Thanks to [mukyuu on stackoverflow](https://stackoverflow.com/users/3654837/mukyuu)
+The solution is to use quotation marks around the names. At least for this setup. The repo where this error originated from is still not fixed. Thanks to [mukyuu on stackoverflow](https://stackoverflow.com/users/3654837/mukyuu)
 
 ```ts
 @EntityRepository(Something)

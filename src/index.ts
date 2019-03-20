@@ -23,14 +23,13 @@ createConnection().then(async (connection) => {
     // console.log('Loaded users: ', users);
     const spotRepo = getCustomRepository(BathingspotRepository);
     const spotAgain = await spotRepo.findByUserAndSpotIdGood(user.id, spot.id);
-    console.log(spotAgain);
+    console.log('Working query:', spotAgain);
     try {
         const spotAgainAgain = await spotRepo.findByUserAndSpotIdBad(user.id, spot.id);
-        console.log(spotAgainAgain);
+        console.log('Not working query:', spotAgainAgain);
 
     } catch (e) {
         console.log(e);
     }
-
 
 }).catch(error => console.log(error));

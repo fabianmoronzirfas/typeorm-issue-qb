@@ -1,4 +1,4 @@
-# Awesome Project Build with TypeORM
+# TypeORM QueryBuilder Quotation Issue
 
 Steps to run this project:
 
@@ -9,7 +9,7 @@ Steps to run this project:
 
 ## Issue
 
-What is wrong with the parameters in my Typeorm where clause for the QueryBuilder?
+[What is wrong with the parameters in my Typeorm where clause for the QueryBuilder?](https://stackoverflow.com/questions/55240553/what-is-wrong-with-the-parameters-in-my-typeorm-where-clause-for-the-querybuilde/55254938#55254938)
 
 Can someone explain to me what I am doing wrong when using the parameters for my where clause?
 
@@ -50,4 +50,21 @@ export class SomethingRepository extends Repository<Something>{
 }
 ```
 
-See the src for the real thing.
+See [src/BathingspotRepository.ts](src/BathingspotRepository.ts) for the real thing.
+
+## Solution  
+
+The solution is to use quotation marks around the names. Thanks to [mukyuu on stackoverflow](https://stackoverflow.com/users/3654837/mukyuu)
+
+```ts
+@EntityRepository(Something)
+export class SomethingRepository extends Repository<Something>{
+  
+  findByUserAndSomethingById(userId: number, spotId: number){
+    const thing = this.createQueryBuilder('something')
+    .where('"something"."userId" = :id', {id: userId})
+    .andWhere('something.id = :id',{id: spotId}).getOne();
+    return thing;
+  }
+}
+```

@@ -19,7 +19,7 @@ createConnection().then(async (connection) => {
     console.log('Saved a new spot with id: ' + spot.id);
 
     console.log('Loading users from the database...');
-    const users = await connection.manager.find(User, { relations: ['bathingspots'] });
+    // const users = await connection.manager.find(User, { relations: ['bathingspots'] });
     // console.log('Loaded users: ', users);
     const spotRepo = getCustomRepository(BathingspotRepository);
     const spotAgain = await spotRepo.findByUserAndSpotIdGood(user.id, spot.id);

@@ -54,7 +54,7 @@ See [src/BathingspotRepository.ts](src/BathingspotRepository.ts) for the real th
 
 ## Solution  
 
-The solution is to use quotation marks around the names. At least for this setup. The repo where this error originated from is still not fixed. Thanks to [mukyuu on stackoverflow](https://stackoverflow.com/users/3654837/mukyuu)
+The suggestion to use quotation marks around the names did only work for this setup. The repo where this error originated from is still not fixed. Thanks to [mukyuu on stackoverflow](https://stackoverflow.com/users/3654837/mukyuu)
 
 ```ts
 @EntityRepository(Something)
@@ -65,6 +65,23 @@ export class SomethingRepository extends Repository<Something>{
     .where('"something"."userId" = :id', {id: userId})
     .andWhere('something.id = :id',{id: spotId}).getOne();
     return thing;
+  }
+}
+```
+
+What worked? The whole query was wrong. I was only getting the entity but not its relations. So **here is the working code:**  
+
+
+```ts
+@EntityRepository(Something)
+export class SomethingRepository extends Repository<Something>{
+  findByUserAndSomethingById(userId: number, spotId: number){
+
+    const spot = this.createQueryBuilder('bathingspot')
+      .innerJoin('bathingspot.user', 'user')
+      .where('user.id = :uid', { uid: userId })
+      .andWhere('bathingspot.id = :sid', { sid: spotId }).getOne();
+    return spot;
   }
 }
 ```
